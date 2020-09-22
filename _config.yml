@@ -1,0 +1,27 @@
+# Setup
+title: "A refined Git branching model"
+tagline: ""
+description: "A more complete and robust take on a very 'Successful Git branching model'."
+url: "https://ethenyl.github.io"
+baseurl: ""
+paginate: 5
+permalink: pretty
+
+# About/contact
+author:
+  name: Damien Rivet
+  email: damien.rivet@gmail.com
+  position: Senior Software Engineer @ Ogury Ltd
+  github_url: https://github.com/Ethenyl
+  twitter_url: https://twitter.com/Ethenyl
+
+# Gems
+plugins:
+  - jekyll-paginate
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Custom vars
+version: 0.1.0
+google_analytics_id: #UA-XXXX-Y

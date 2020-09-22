@@ -1,1 +1,1 @@
-# Ethenyl GitHub Page
+# Ethenyl GitHub page
