@@ -1,66 +1,55 @@
 ---
 layout: post
-identifier:
-title: A more complete and robust take on a very "Successful Git branching model"
+title: An alternative take on a very "Successful Git branching model"
 comments: true
 ---
 
-## Foreword
+# Foreword
 
-Let me render to Caesar the things that are Caesar's 🕊, this whole article is heavily based on the wonderful work of [Vincent Driessen](https://nvie.com) on [A successful Git branching model](https://nvie.com/posts/a-successful-git-branching-model), which you should already know by now.
+Let me render to Caesar the things that are Caesar's 🕊, this post is heavily based on the wonderful work of [Vincent Driessen](https://nvie.com) on [A successful Git branching model](https://nvie.com/posts/a-successful-git-branching-model), which you should already know by now.
 
-I came to learn about his article during the summer of 2016 when I joined for the first time a huge team of more than 150 people. As obvious as it is, working within such a vast crowd of heteroclite developers requires a very strict Git discipline and boy… 😥 saying that I was not ready for it is a massive understatement!
+I came to learn about his post during the summer of 2016 when I joined for the first time a team of more than 150 people. As obvious as it is, working within such a vast crowd of heteroclite developers requires a very strict **Git** discipline and boy… 😥 saying that I was not ready for it is a massive understatement!
 
 During my first couple of weeks, I learned much more than during the past two years both in term of best practices enforcement and continuous integration. Beforehand, I never had the opportunity nor the knowledge to squash commits together or rebase a branch that was behind one of the main branches.
 
-**TODO: Add description on how I started with ASGBM.**
+I needed to quickly get up to speed and the best way was to learn from my colleagues and try to document myself on the **Git** flow they were using. That's when I started reading the source post.
 
-Even thought this article is targeted at both **Git** newcomers & veterans alike, I'm not going to lecture you on the basic usage and concepts of **Git** like hurling commands with the command line interface (CLI) or creating a pull request (PR).
+Even thought my post is targeted at both **Git** newcomers & veterans alike, I'm not going to lecture you on the basic usage and concepts of **Git** like typing commands with the command line interface (CLI) or creating a pull request (PR).
 
 For the sake of clarity, I will also not stick to a specific hosting platform (GitHub, GitLab, BitBucket, etc.) and to a specific stack (front, back, mobile, etc.) although I have tested thoroughly this model with iOS Apps and Frameworks.
 
 ---
 
-## Overview
+# Overview
 
-## Tools of the trade 🧰
+The following sections will each be dedicated to a specific aspect of working with **Git** or with a specific branch.
 
-Preparing and completing your personal (and team) toolbox is the key to any form of work, even more for a digital craft.
+Those sections are ordered to follow the actual flow explained by this post.
 
-It is mandatory that you keep a fraction of your free time to explore new solutions, sharpen your skills with your toolset and find new assets to add to your collection.
+Here is the legend for the images enclosed in this post:
 
-Without further ado, here's a list of some of the tools I'm using every single day:
+| Icon    | Description                                                    |
+| ------- | -------------------------------------------------------------- |
+| 🔒      | A branch with permissions (ex: enforcing comment resolution)   |
+| 🛡       | A protected branch that cannot be deleted or rewritten         |
+| `X 🛠 Y` | A `X` tag that triggers an automated build for the `Y` environment |
 
-- [Visual Studio Code](https://code.visualstudio.com), a rock solid multi-format editor (macOS / Windows / Linux)
-- [Fork](https://git-fork.com), a pretty clean and stable user interface for **Git** (macOS / Windows)
-- [GitHub Desktop](https://desktop.github.com), another user interface for **Git** (macOS / Windows)
-- [iTerm2](https://www.iterm2.com), a highly customisable terminal (macOS)
-- [OhMyZsh](https://ohmyz.sh), an efficient toolbox for your terminal (macOS / Linux / Windows)
-- [Rectangle](https://rectangleapp.com), a tiny App to help you manage all those pesky windows
+Below is an overview of the whole branching model:
 
-And here, a short list of paid tools that can greatly improve or simplify your life:
+{% include embedded_image.html imageurl='git_branching_model_global.png' %}
 
-- [Kaleidoscope](https://www.kaleidoscopeapp.com), a diffing tool to compare file & folders (macOS)
-
-As previously stated, I won't go over the required tools like Xcode for Apple-related development as there are not many choices around there for such stack.
+---
 
 ## Commit subject and body 💬
 
 Any commit within your **Git** tree must be identifiable at a quick glance, there's nothing more frustrating than looking for a very specific change and finding it hidden in a commit with a subject like `Fix issue, minor tweaks` 😥
 
-Others have written thorough article on how to write a "good" commit, feel free to check them out:
+Others have written thorough posts on how to write a "good" commit, feel free to check them out:
 
 - [How to Write a Git Commit Message](https://chris.beams.io/posts/git-commit)
 - [Anatomy of a "Good" commit message](https://medium.com/@andrewhowdencom/anatomy-of-a-good-commit-message-acd9c4490437)
 
-TL;DR; For the people with no spare time, here's a quick recap:
-
-- The first letter of the subject should be capitalised
-- The subject must be written using the imperative
-- The subject must stay below 70 characters
-- The body must describe what has been done, without technical details
-
-If the branch you are going to create is linked to a specific ticket in your team's issue tracking software, it is critical (for your sanity and your colleagues) that you apply the following tips.
+If the branch you are going to create is linked to a specific ticket in your team's issue tracking software, it is critical that you apply the following tips.
 
 First, add the ticket key after the mandatory prefix in your branch name:
 
@@ -76,7 +65,7 @@ Second, all commits done in this branch must include the ticket's key in their s
 
 This will ensure that by giving a quick look at a branch name is more than enough to know what is actually going on.
 
-And naming the commits accordingly will also let most of the issue tracking softwares pickup the commits. This will also let you know how to find more details about the actual feature or fix that is being implemented without asking around.
+And naming the commits accordingly will also let most of the issue tracking softwares pickup the commits. As a bonus, it will also let you know how to find more details about the actual feature or fix that is being implemented without asking around.
 
 Here's a few good examples:
 
@@ -92,6 +81,22 @@ And a few bad ones:
 >
 > [FIX] Fix things
 
+Most sections will contain a TL;DR; part if you just want to scroll through the post.
+
+```
+TL;DR;
+
+- Branch name must be prefixed (feature, bugfix, release, hotfix)
+- Branch name must contain ID from issue tracking software (if any)
+- Commit subject must contain ID from issue tracking software (if any)
+- The first letter of the subject should be capitalised
+- The subject must be written using the imperative
+- The subject must stay below 70 characters
+- The body must describe what has been done, without technical details
+```
+
+---
+
 ## Production branch 🚚
 
 This peculiar branch is the one where every single commit should represent a stable version of your product.
@@ -100,12 +105,14 @@ It's the first branch that you will create when starting a new project, it's the
 
 Every time a new release is made on the production branch, the commit it originated from must be tagged accordingly but more on that process later.
 
-TODO: Add image
+```
+TL;DR;
 
+- Created with the repository
+- Named master | main | production | release | stable
 ```
-Created with the repository
-Named master | main | production | release | stable
-```
+
+---
 
 ## Development branch 🛠
 
@@ -115,32 +122,40 @@ Every single feature branch will be targeted at the development branch in order 
 
 In terms of continuous integration, each time a PR is accepted and a branch is merged into this branch, a new deliverable should be generated by your CI (Continuous Integration) and deployed on an internal platform. The artefact should later be used by the Q&A team to validate the integration of all the features and bug fixes.
 
-TODO: Add image
-
 ```
-Created from production branch right after the initial commit
-Named develop | development
+TL;DR;
+
+- Created from production branch right after the initial commit
+- Named develop | development
 ```
 
-## Branch protections 🔒
+---
+
+## Branch permissions & protection 🔒
 
 Before moving on to the other branch patterns, I would like us to take a few steps back and reflect on the two branches we just went through.
 
-By default, all branches can be pushed to or history rewritten and you may be fine with it but it's a treacherous road to take.
+By default, all branches can be pushed to, their history rewritten and even deleted.
 
-We are all humans, making mistakes is part of who we are, so it is bound to happen that some day, someone might forget to checkout the right branch or target the right branch on a PR.
+We are all humans, making mistakes is part of who we are, so it is bound to happen that some day, someone might forget to checkout the right branch, target the right branch on a PR or even delete a critical branch after merging a PR.
 
-So, in order to prevent any mishap, branch protections must be put in place on both the production and the development branches.
+So, to prevent any mishap, branch permissions & protections must be put in place on both the production and the development branches.
 
 The minimum would be:
 
-- No push allowed 💪
-- No history rewrite ✍️
-- No deletion 🗑
+> No push allowed 💪
+
+> No history rewrite ✍️
+
+> No deletion 🗑
+
+**Those must be applied to both owners & maintainers as well** 😉
 
 By default, most SCM platform will enforce those three protections but feel free to poke at the settings and tweak them to match your team's actual needs.
 
-Oh, and by the way, those should be applied to both owners & maintainers as well 😉
+You can also enforce PR validation requirements like the minimum number of reviewers or checking that all discussions are resolved before allowing the PR to be merged.
+
+---
 
 ## Feature branches 📘
 
@@ -154,33 +169,80 @@ What about features that require parallel work? Well, it's only a matter of rigo
 
 For long living branches (which we all despise), it's perfectly fine to merge the development branch into them at regular intervals to keep up with the latest evolutions and to ease the final merge. Rebasing those might be too much of a daunting task, even for seasoned veterans.
 
-TODO: Add image
+{% include embedded_image.html imageurl='git_branching_model_feature_branch.png' %}
 
 ```
 TL;DR;
+
 - Created from development branch
 - Named feature/{ticket}{short-summary}
 - Merged into development branch
 ```
 
+---
+
 ## Merge strategies 🔩
+
+{% include embedded_image.html imageurl='git_branching_model_merge_strategies.png' %}
 
 Let's take a few other steps back for a minute and let me entertain you for a little while about merge strategies.
 
-**TODO: Explain different merge strategies and press on with "merge commit"**
+### Explicit merge with commit
+
+A merge commit is created upon merging a branch in another one, this is the default merge strategy and the one I encourage you to use.
+
+- **Pros 👍**
+    - History is preserved
+    - Easy to revert
+- **Cons 👎**
+    - Heavy on the eye
+    - Requires rebasing discipline to make it efficient
+
+### Squash merge with commit
+
+All commits are squashed into a single new commit before the PR is merged.
+
+- **Pros 👍**
+    - Single linear commit
+    - Easy to revert
+- **Cons 👎**
+    - History is lost
+
+### Rebase | fast-forward merge
+
+All commits are applied on the target branch after the PR is merged.
+
+- **Pros 👍**
+    - Linear commits
+    - History is preserved
+- **Cons 👎**
+    - Hard to revert
+
+### Going further
+
+Here are a few posts on merge strategies that are worth the read:
+
+- [Types of Git Merge Strategies](https://www.atlassian.com/git/tutorials/using-branches/merge-strategy)
+- [Merge strategies in Git](https://www.geeksforgeeks.org/merge-strategies-in-git)
+- [Merge strategies](https://www.w3docs.com/learn-git/git-merge-strategies.html)
+
+---
 
 ## Bugfix branches 🐛
 
 Similarly to feature branches, branches dedicated to bug fixing can be created from the development branch but can also from feature branches, especially the one dedicated to major features associated with long development lifecycles.
 
-**TODO: Add image**
+{% include embedded_image.html imageurl='git_branching_model_bugfix_branch.png' %}
 
 ```
 TL;DR;
+
 - Created from development & feature branches
 - Named bugfix/{ticket}{short-summary}
 - Merged into development & feature branches
 ```
+
+---
 
 ## Semantic versioning 🖇
 
@@ -210,6 +272,8 @@ You will need this information each time a bug is reported, otherwise, it will b
 
 It will also be useful for the users of your deliverables so they can pinpoint which exact release they need in order to use a specific feature.
 
+---
+
 ## Release branches 📦
 
 Once your development branch reach a point where all the expected features and bug fixes are implemented, it might be the right time to perform a release.
@@ -218,7 +282,7 @@ A release branch can also be used to perform bug fixes (that you may or may not 
 
 It's a pretty straightforward process:
 
-1. Create a release branch from the development branch (ex: release/1.2.3)
+1. Create a release branch from the development branch (ex: `release/1.2.3`)
 1. Perform a version bump within your project
 1. Update the `CHANGELOG.md` file to include all the changes and fixes
 1. Generate a new version manually or let the CI do the heavy lifting
@@ -228,34 +292,38 @@ After the testing phase comes the best and most stressful moment in a developer'
 A small remainder, it is strictly forbidden to merge the development branch into a release branch as it might introduce unwanted features and potential regressions.
 As for handling beta releases, everything will be explained right after 😉
 
-**TODO: Add image**
+{% include embedded_image.html imageurl='git_branching_model_release_branch.png' %}
 
 ```
 TL;DR;
+
 - Created from development branch
 - Named release/{version}
 - Merged into production branch
 - Induces back merge (see below)
 ```
 
-## Back merges ⏳
+---
 
-😕 A back what?!
+## Back merges ⏳
 
 Performing a back merge is a pretty straightforward process, once a new stable version or a hotfix has been released into production, the production branch needs to be merged back into the development branch.
 
 This will ensure that all tags and hotfixes are back ported into the development branches so nothing in lost in translation.
 
+---
+
 ## Tags 🏷
 
 Tags are like any other branches, the main difference is that nothing happen on those, they are just markers on specific commits to express a state of your project at a given time.
-Like I said, the main usage of a tag is to keep a lock of your project at a specific commit, this is critical for production release as it allows you to mark the merge commit that was the result of merging a release branch into the production branch.
+
+The main usage of a tag is to keep a lock of your project at a specific commit, this is critical for production release as it allows you to mark the merge commit that was the result of merging a release branch into the production branch.
 
 If you want to know a little more about **Git** tags, follow this [link](https://git-scm.com/book/en/v2/Git-Basics-Tagging).
 
-**TODO: Add image**
+And they can also be used for something else, managing beta versions 👇
 
-And guess what… they can also be used for something else, managing beta versions 👇
+---
 
 ## Beta versions ☢️
 
@@ -267,26 +335,29 @@ But… should you create a dedicated branch like beta/my-awesome-beta-for-v2.5.1
 
 Well, in this flow, it is a slight mix of those two, the steps are the following:
 
-1. Create a branch named release/2.5.1-beta-new-layout from the commit that you want to test in your release branch
-1. Commit & push only a version bump in it, going from 2.5.1 to 2.5.1-beta-new-layout
-1. Tag this new commit with 2.5.1-beta-new-layout-XXX, where XXX is a positive number indicating the iteration for the current beta (like 2.5.1-beta-new-layout-004, leading zeros are not mandatory, it's just easier on the eyes) and push it to origin
-1. Delete the branch, the tag will hold the beta version for everyone to find
-1. Using the commit, perform a manual release or configure your CI to handle those tags to generate a new deliverable
-1. Profit!
+1. Create a branch named `release/2.5.1-beta-new-layout` from the commit that you want to test in your release branch
+1. Commit & push only a version bump in it, going from `2.5.1` to `2.5.1-beta-new-layout`
+1. Tag this new commit with `2.5.1-beta-new-layout-XXX`, where `XXX` is a positive number indicating the iteration for the current beta (like `2.5.1-beta-new-layout-004`, leading zeros are not mandatory, it's just easier on the eyes) and push it to origin
+1. Delete the beta branch, the tag will hold the beta version like a branch would
+1. Using the commit, perform a manual release or configure your CI to handle tags to generate a new deliverables
+1. Share this version with the Q&A team and let them test it (it can also be shared with a restricted selection of customers that are willing to help)
 
-This small steps will allow you to safely release new test versions without altering the actual content of the release. Moreover, the tags will also keep those versions alive for regression testing later on.
+Those small steps will allow you to safely release new test versions without altering the actual content of the release. Moreover, the tags will also keep those versions alive for regression testing later on.
 
 Afterward, it is up to you and your team to decide whether you keep those beta versions or not, a good practice would be to keep at least two versions behind the version in production.
 
-**TODO: Add image**
+{% include embedded_image.html imageurl='git_branching_model_beta_branch.png' %}
 
 ```
 TL;DR;
+
 - Created from release branch
 - Named release/{version}{beta-version}
 - Contains a single tagged commit
 - Never merged
 ```
+
+---
 
 ## Hotfix branches 🚒
 
@@ -294,10 +365,11 @@ Unlike bugfix branches, hotfix branches can only be created from the production 
 
 And like any release branch, a hotfix branch must induce a version change and include changes to the `CHANGELOG.md` file to explain what has been done since the last release / hotfix.
 
-**TODO: Add image**
+{% include embedded_image.html imageurl='git_branching_model_hotfix_branch.png' %}
 
 ```
 TL;DR;
+
 - Created from production branch
 - Named hotfix/{version}
 - Merged into production branch
@@ -306,27 +378,31 @@ TL;DR;
 
 ---
 
-## Conclusion
+# Conclusion
 
-As I am well aware that each project is unique, I am also aware that this particular Git branching model might not suit your exact needs. And that's perfectly fine, I never claimed to offer you THE silver bullet that would solve all your issues 😏
+As I am well aware that each project is unique, I am also aware that this particular **Git** branching model might not suit your exact needs. And that's perfectly fine, I never claimed to offer you THE silver bullet that would solve all your issues 😏
 
 I hope that some of you have found a way to improve their day-to-day workflows with this simple yet effective flow.
 
----
-
-## Contribute
-
-In order to tweak / improve the flow for everyone, do not hesitate to ask questions through Twitter or GitHub, I'll update this article as new topics are raised and solutions are found.
+That's all folks!
 
 ---
 
-## Q & A
+# Contribute
+
+In order to tweak / improve this post for everyone, do not hesitate to ask questions using the comments section below or **Twitter**.
+
+This post will be updated as new topics are raised and solutions are found.
+
+---
+
+# Q & A
 
 None for the moment 😉
 
 ---
 
-## Glossary
+# Glossary
 
 | --- | --- |
 | **SCM** | Source Code Management |
@@ -337,7 +413,7 @@ None for the moment 😉
 
 {% if page.comments %}
 
-## Comments
+# Comments
 
 <div id="disqus_thread"></div>
 <script>

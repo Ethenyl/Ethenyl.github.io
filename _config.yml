@@ -1,7 +1,7 @@
 # Setup
 title: "A refined Git branching model"
 tagline: ""
-description: "A more complete and robust take on a very 'Successful Git branching model'."
+description: "An alternative take on a very 'Successful Git branching model'."
 url: "https://ethenyl.github.io"
 baseurl: ""
 paginate: 5
