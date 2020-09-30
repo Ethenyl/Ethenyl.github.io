@@ -340,7 +340,7 @@ TL;DR;
 
 Performing a back merge is a pretty straightforward process, once a new stable version or a hotfix has been released into production, the production branch needs to be merged back into the development branch.
 
-This will ensure that all tags and hotfixes are back ported into the development branches so nothing in lost in translation.
+This will ensure that all tags and hotfixes are back ported into the development branches so nothing is lost in translation.
 
 ---
 
@@ -452,6 +452,7 @@ None for the moment 😉
 # Glossary
 
 | --- | --- |
+|**TL;DR;**| Too Long; Didn't Read;|
 | **SCM** | Source Code Management |
 | **PR** | Pull Request, also known as Merge Request in some SCM |
 | **CI** | Continuous Integration |
