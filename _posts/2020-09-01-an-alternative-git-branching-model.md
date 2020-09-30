@@ -300,21 +300,24 @@ It will also be useful for the users of your deliverables so they can pinpoint w
 
 Once your development branch reach a point where all the expected features and bug fixes are implemented, it might be the right time to perform a release.
 
-A release branch can also be used to perform bug fixes (that you may or may not cherry pick into the development branch) and last minute feature implementation.
+A release branch can also be used to perform last minute bug fixes (that you may or may not cherry pick into the development branch) and feature implementation.
 
-It's a pretty straightforward process:
+Preparing a release is a straightforward process:
 
 1. Create a release branch from the development branch (ex: `release/1.2.3`)
-1. Perform a version bump within your project
-1. Update the `CHANGELOG.md` file to include all the changes and fixes
+1. Perform a version bump within your project to `1.2.3`
+1. Update the `CHANGELOG.md` file to include all the additions, changes and fixes
+1. Push your changes with a commit named `Release 1.2.3`
+1. Create a PR targeted at the production branch
+1. Once merged, tag the merge commit with `1.2.3` (see below for handling tags)
 1. Generate a new version manually or let the CI do the heavy lifting
 1. Share this version with the Q&A team and let them test it with their beloved Non-Regression Testing (NRT) campaigns 😈
 
-After the testing phase comes the best and most stressful moment in a developer's life, the public release but this your story and yours only 🚀
+A small reminder, **it is strictly forbidden to merge the development branch into a release branch** as it might introduce unwanted features and potential regressions.
 
-A small remainder, it is strictly forbidden to merge the development branch into a release branch as it might introduce unwanted features and potential regressions.
+After the testing phase comes the best and most stressful moment in a developer's life, the public release but this is your story and yours only 🚀
 
-As for handling beta releases, everything will be explained right after 😉
+As for handling beta versions, everything will be explained in a dedicated section below 😉
 
 <br />
 
@@ -366,13 +369,21 @@ Well, in this flow, it is a slight mix of those two, the steps are the following
 1. Create a branch named `release/0.1.0-beta-new-layout` from the commit that you want to test in your release branch
 1. Commit & push only a version bump in it, going from `0.1.0` to `0.1.0-beta-new-layout`
 1. Tag this new commit with `0.1.0-beta-new-layout-XXX`, where `XXX` is a positive number indicating the iteration for the current beta (like `0.1.0-beta-new-layout-004`, leading zeros are not mandatory, it's just easier on the eyes) and push it to origin
-1. Delete the beta branch, the tag will hold the beta version like a branch would
-1. Using the commit, perform a manual release or configure your CI to handle tags to generate a new deliverables
+1. Delete the beta branch (the tag will hold the beta version like a branch would)
+1. Using this commit, perform a manual release or configure your CI to handle beta tags to generate a new deliverable
 1. Share this version with the Q&A team and let them test it (it can also be shared with a restricted selection of customers that are willing to help)
 
 Those small steps will allow you to safely release new test versions without altering the actual content of the release. Moreover, the tags will also keep those versions alive for regression testing later on.
 
 Afterward, it is up to you and your team to decide whether you keep those beta versions or not, a good practice would be to keep at least two versions behind the version in production.
+
+### Bug fixes in beta version
+
+If a bug is found in a beta version, a bugfix branch can be created from the HEAD of the release branch.
+
+This bugfix can later be merged into the release branch in preparation for another beta version release.
+
+For critical bug fixes, it is also possible to merge them into the development branch if waiting for the next back merge is not an option.
 
 <br />
 
