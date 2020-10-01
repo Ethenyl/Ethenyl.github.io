@@ -10,11 +10,21 @@ Let me render to Caesar the things that are Caesar's 🕊, this post is heavily 
 
 I came to learn about his post during the summer of 2016 when I joined for the first time a team of more than 150 people. As obvious as it is, working within such a vast crowd of heteroclite developers requires a very strict **Git** discipline and boy… 😥 saying that I was not ready for it is a massive understatement!
 
-During my first couple of weeks, I learned much more than during the past two years both in term of best practices enforcement and continuous integration. Beforehand, I never had the opportunity nor the knowledge to squash commits together or rebase a branch that was behind one of the main branches.
+During my first couple of weeks, I learned much more than during the past two years both in terms of best practices enforcement and continuous integration. Beforehand, I never had the opportunity nor the knowledge to squash commits together or rebase a branch that was behind one of the main branches.
 
 I needed to quickly get up to speed and the best way was to learn from my colleagues and try to document myself on the **Git** flow they were using. That's when I started reading the source post.
 
-Even thought my post is targeted at both **Git** newcomers & veterans alike, I'm not going to lecture you on the basic usage and concepts of **Git** like typing commands with the command line interface (CLI) or creating a pull request (PR).
+## Purpose
+
+The goal of this post is to expand the original model by covering advanced topics like:
+
+- Good practices for commits
+- Branch protections
+- Parallel feature branches
+- Semantic versioning
+- Beta versions
+
+Even thought this post is targeted at both **Git** newcomers & veterans alike, I am not going to lecture you on the basic usage and concepts of **Git** like using the command line interface (CLI) or creating a pull request (PR).
 
 For the sake of clarity, I will also not stick to a specific hosting platform (GitHub, GitLab, BitBucket, etc.) and to a specific stack (front, back, mobile, etc.) although I have tested thoroughly this model with iOS Apps and Frameworks.
 
@@ -33,12 +43,6 @@ Here is the legend for the images enclosed in this post:
 | 🔒      | A branch with permissions (ex: enforcing comment resolution)       |
 | 🛡       | A protected branch that cannot be deleted or rewritten             |
 | `X 🛠 Y` | A `X` tag that triggers an automated build for the `Y` environment |
-
-Below is an overview of the whole branching model:
-
-<br />
-
-{% include embedded_image.html imageurl='git_branching_model_global.png' %}
 
 ---
 
@@ -105,7 +109,7 @@ TL;DR;
 
 This peculiar branch is the one where every single commit should represent a stable version of your product.
 
-It's the first branch that you will create when starting a new project, it's the root of all the work that will be done and it is the first step in a new journey that will (or will not) change people's life.
+It is the first branch that you will create when starting a new project, it is also the root of all the work that will be done and the first step in a new journey that will (or will not) change people's life.
 
 Every time a new release is made on the production branch, the commit it originated from must be tagged accordingly but more on that process later.
 
@@ -123,7 +127,7 @@ TL;DR;
 
 ## Development branch 🛠
 
-This unique branch is where the actual magic happen, it will serve as the root of all your features and bug fixes.
+This unique branch is where the actual magic happens, it will serve as the root of all your features and bug fixes.
 
 Every single feature branch will be targeted at the development branch in order to make the new stuff available to everyone. Where is the fun in working all alone?
 
@@ -161,7 +165,7 @@ The minimum would be:
 
 **Those must be applied to both owners & maintainers as well** 😉
 
-By default, most SCM platform will enforce those three protections but feel free to poke at the settings and tweak them to match your team's actual needs.
+By default, most SCM platforms will enforce those three protections but feel free to poke at the settings and tweak them to match your team's actual needs.
 
 You can also enforce PR validation requirements like the minimum number of reviewers or checking that all discussions are resolved before allowing the PR to be merged.
 
@@ -171,17 +175,31 @@ You can also enforce PR validation requirements like the minimum number of revie
 
 Those branches are the one that will come and go as you add more and more content to your project and you merge outstanding PRs.
 
-Each one of those might contains a very small tweak to an existing feature, a whole new set of features or a complete refactoring of your project.
+Each one of those might contain a very small tweak to an existing feature, a whole new set of features or a complete refactoring of your project.
 
-All of them starts from the development branch and will be merged into it as soon as everything is validated by your team.
-
-What about features that require parallel work? Well, it's only a matter of rigorousness between you and your team member as you will need to thoroughly rebase your branch on the development branch (or for the more lazy one, merge the development branch into your branch).
-
-For long living branches (which we all despise), it's perfectly fine to merge the development branch into them at regular intervals to keep up with the latest evolutions and to ease the final merge. Rebasing those might be too much of a daunting task, even for seasoned veterans.
+All of them start from the development branch and will be merged into it as soon as everything is validated by your team.
 
 <br />
 
 {% include embedded_image.html imageurl='git_branching_model_feature_branch.png' %}
+
+### Parallel feature branches
+
+What about long-living feature branches that require parallel work? 🤔
+
+The solution is to treat each long-living branch as a development branch and start new features & bugfix directly from them.
+
+Newly created PR will need to target the long-living branches instead of the development branch.
+
+Afterward, it's a matter of rigorousness between the different team members as you will need to thoroughly rebase your long-living branch on the development branch at regular intervals.
+
+Rebasing a long-living branch might be too much of a daunting task, even for seasoned veterans, so it is fine to merge the development branch into them.
+
+This will allow them to keep up with the latest evolutions and ease the final merge. 
+
+<br />
+
+{% include embedded_image.html imageurl='git_branching_model_parallel_features_branch.png' %}
 
 <br />
 
@@ -208,7 +226,7 @@ A merge commit is created upon merging a branch in another one, this is the defa
   - Easy to revert
 - **Cons 👎**
   - Heavy on the eye
-  - Requires rebasing discipline to make it efficient
+  - Requires local squashing discipline to make it efficient
 
 ### Squash merge with commit
 
@@ -298,7 +316,7 @@ It will also be useful for the users of your deliverables so they can pinpoint w
 
 ## Release branches 📦
 
-Once your development branch reach a point where all the expected features and bug fixes are implemented, it might be the right time to perform a release.
+Once your development branch reaches a point where all the expected features and bug fixes are implemented, it might be the right time to perform a release.
 
 A release branch can also be used to perform last minute bug fixes (that you may or may not cherry pick into the development branch) and feature implementation.
 
@@ -346,7 +364,7 @@ This will ensure that all tags and hotfixes are back ported into the development
 
 ## Tags 🏷
 
-Tags are like any other branches, the main difference is that nothing happen on those, they are just markers on specific commits to express a state of your project at a given time.
+Tags are like any other branches, the main difference is that nothing happens on those, they are just markers on specific commits to express a state of your project at a given time.
 
 The main usage of a tag is to keep a lock of your project at a specific commit, this is critical for production release as it allows you to mark the merge commit that was the result of merging a release branch into the production branch.
 
@@ -358,11 +376,11 @@ And they can also be used for something else, managing beta versions 👇
 
 ## Beta versions ☢️
 
-What happen when you and your team are ready to release a new version but you also want to let some of your esteemed users have a bite of the new features before everyone else?
+What happens when you and your team are ready to release a new version but you also want to let some of your esteemed users have a bite of the new features before everyone else?
 
 The solution is to create a beta version and release it to a select few that may help you test your product before performing the actual release itself.
 
-But… should you create a dedicated branch like `beta/my-awesome-beta-for-v0.1.0`? Should you simply tag a specific commit it your release branch and perform a manual release?
+But… should you create a dedicated branch like `beta/my-awesome-beta-for-v0.1.0`? Should you simply tag a specific commit on your release branch and perform a manual release?
 
 Well, in this flow, it is a slight mix of those two, the steps are the following:
 
@@ -430,6 +448,14 @@ TL;DR;
 As I am well aware that each project is unique, I am also aware that this particular **Git** branching model might not suit your exact needs. And that's perfectly fine, I never claimed to offer you THE silver bullet that would solve all your issues 😏
 
 I hope that some of you have found a way to improve their day-to-day workflows with this simple yet effective flow.
+
+Below is an overview of the whole branching model:
+
+<br />
+
+{% include embedded_image.html imageurl='git_branching_model_global.png' %}
+
+<br />
 
 That's all folks!
 
