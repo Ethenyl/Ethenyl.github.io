@@ -24,4 +24,4 @@ plugins:
 
 # Custom vars
 version: 0.1.0
-google_analytics_id: #UA-XXXX-Y
+google_analytics_id: UA-179423706-1
