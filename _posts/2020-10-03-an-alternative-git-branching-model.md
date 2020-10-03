@@ -4,6 +4,10 @@ title: An alternative take on a very "Successful Git branching model"
 comments: true
 ---
 
+<center>
+<img style="width: 256px;" src="/public/images/icon-git.png" />
+</center>
+
 ## Foreword
 
 Let me render to Caesar the things that are Caesar's 🕊, this post is heavily based on the wonderful work of [Vincent Driessen](https://nvie.com) on [A successful Git branching model](https://nvie.com/posts/a-successful-git-branching-model), which you should already know by now.
