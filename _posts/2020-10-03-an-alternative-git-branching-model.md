@@ -4,7 +4,7 @@ title: An alternative take on a very "Successful Git branching model"
 comments: true
 ---
 
-# Foreword
+## Foreword
 
 Let me render to Caesar the things that are Caesar's 🕊, this post is heavily based on the wonderful work of [Vincent Driessen](https://nvie.com) on [A successful Git branching model](https://nvie.com/posts/a-successful-git-branching-model), which you should already know by now.
 
@@ -12,7 +12,13 @@ I came to learn about his post during the summer of 2016 when I joined for the f
 
 During my first couple of weeks, I learned much more than during the past two years both in terms of best practices enforcement and continuous integration. Beforehand, I never had the opportunity nor the knowledge to squash commits together or rebase a branch that was behind one of the main branches.
 
-I needed to quickly get up to speed and the best way was to learn from my colleagues and try to document myself on the **Git** flow they were using. That's when I started reading the source post.
+I needed to quickly get up to speed and the best way was to learn from my colleagues and try to document myself on the **Git** flow they were using. That's when I started reading the source post and changing my ways.
+
+It is only when I reached a certain point that I started to feel like something was missing, that some corner cases weren't taken into account.
+
+During those last years, I moved from one job to another and worked on multiple projects at the same time with different team sizes, which led me to start experimenting with a different branching model.
+
+And after this experimentation period, I feel that this branching model is now mature enough to release it and start getting some feedback from more experienced people.
 
 ## Purpose
 
@@ -30,7 +36,7 @@ For the sake of clarity, I will also not stick to a specific hosting platform (G
 
 ---
 
-# Overview
+## Overview
 
 The following sections will each be dedicated to a specific aspect of working with **Git** or with a specific branch.
 
@@ -443,7 +449,7 @@ TL;DR;
 
 ---
 
-# Conclusion
+## Conclusion
 
 As I am well aware that each project is unique, I am also aware that this particular **Git** branching model might not suit your exact needs. And that's perfectly fine, I never claimed to offer you THE silver bullet that would solve all your issues 😏
 
@@ -461,7 +467,7 @@ That's all folks!
 
 ---
 
-# Contribute
+## Contribute
 
 In order to tweak / improve this post for everyone, do not hesitate to ask questions using the comments section below or **Twitter**.
 
@@ -469,13 +475,13 @@ This post will be updated as new topics are raised and solutions are found.
 
 ---
 
-# Q & A
+## Q & A
 
 None for the moment 😉
 
 ---
 
-# Glossary
+## Glossary
 
 | --- | --- |
 |**TL;DR;**| Too Long; Didn't Read;|
@@ -487,7 +493,7 @@ None for the moment 😉
 
 {% if page.comments %}
 
-# Comments
+## Comments
 
 <div id="disqus_thread"></div>
 <script>
