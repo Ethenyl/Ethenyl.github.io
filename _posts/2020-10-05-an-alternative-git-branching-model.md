@@ -181,6 +181,26 @@ You can also enforce PR validation requirements like the minimum number of revie
 
 ---
 
+## Enforcing good practices with Git hooks 🪝
+
+If you need to make sure that everyone is following the conventions regarding branch names, there is a way to make it automatically happen.
+
+Git supplies us with hooks that will be called at different moments of a commit lifecycle, whether it is on the developer's machine or on the Git repository.
+
+There are multiple client hooks but one of the most used is the `pre-commit` and, as the name implies, it will be fired even before a commit is made offering the developer a chance to fix what has been flagged as an issue (ex: unknown branch pattern, missing changelog entry, etc.).
+
+But client-side hooks work only locally and need to be duplicated for each developer.
+
+Server-side hooks, and mainly the `pre-receive` hook, can be used to make sure that everyone is at the same page regardless of their own setup.
+
+Here is the [official documentation](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) on Git hooks.
+
+It is also important to note that some Git platform (like GitLab) offers the option to enforce branch naming
+
+3rd party solutions like [Danger](https://github.com/danger/danger) are also great at helping with this.
+
+---
+
 ## Feature branches 📘
 
 Those branches are the one that will come and go as you add more and more content to your project and you merge outstanding PRs.
@@ -259,6 +279,10 @@ All commits are applied on the target branch after the PR is merged.
   - Hard to revert
 
 <br />
+
+It goes without saying that my preference goes to the good old explicit merge as there are no real drawbacks.
+
+And if it is not possible to go with it, squash merge are also fine even if the branch history is lost in the process.
 
 {% include embedded_image.html imageurl='git_branching_model_merge_strategies.png' %}
 
