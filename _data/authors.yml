@@ -1,0 +1,11 @@
+Damien Rivet:
+    name: "Damien Rivet"
+    bio: ""
+    avatar: "/assets/images/authors/damien_rivet.jpg"
+    links:
+        - label: "Twitter"
+          icon: "fab fa-fw fa-twitter-square"
+          url: "https://twitter.com/Ethenyl"
+        - label: "GitHub"
+          icon: "fab fa-fw fa-github"
+          url: "https://github.com/Ethenyl"

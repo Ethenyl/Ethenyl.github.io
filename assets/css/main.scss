@@ -1,0 +1,21 @@
+---
+---
+
+@charset "utf-8";
+
+$link-color: #F05138;
+
+.greedy-nav .visible-links a:before {
+    background: #F05138 !important;
+}
+
+.toc .nav__title {
+    background: #F05138 !important;
+}
+
+.pagination--pager {
+    background: #F05138 !important;
+}
+
+@import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
+@import "minimal-mistakes"; // main partials
