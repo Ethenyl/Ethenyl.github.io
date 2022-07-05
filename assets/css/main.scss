@@ -17,5 +17,9 @@ $link-color: #F05138;
     background: #F05138 !important;
 }
 
+.page__content p {
+    font-size: 0.9em !important;
+}
+
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
